@@ -1,0 +1,135 @@
+.content {
+	margin-top: 50px;
+}
+.undecorated-link:hover {
+	text-decoration: none;
+}
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+	display: none !important;
+}
+.ng-invalid.ng-dirty {
+	border-color: #FA787E;
+}
+.ng-valid.ng-dirty {
+	border-color: #78FA89;
+}
+
+input[type=range].rangeButton {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 100%;
+  margin: 14.2px 0;
+}
+/*input[type=range].rangeButton:focus {
+  outline: none;
+}*/
+input[type=range].rangeButton::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 5.6px;
+  cursor: pointer;
+  box-shadow: 1px 1px 1px #000000, 0 0 1px #0d0d0d;
+  background: #e2e4e7;
+  border-radius: 2px;
+  border: 0 solid #000101;
+}
+input[type=range].rangeButton::-webkit-slider-thumb {
+  box-shadow: 0 0 1.2px #000000, 0 0 0 #0d0d0d;
+  border: 1.2px solid #000000;
+  height: 34px;
+  width: 26px;
+  border-radius: 4px;
+  background: #343434;
+  cursor: pointer;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  margin-top: -14.2px;
+}
+input[type=range].rangeButton:focus::-webkit-slider-runnable-track {
+  background: #f8f9f9;
+}
+input[type=range].rangeButton::-moz-range-track {
+  width: 100%;
+  height: 5.6px;
+  cursor: pointer;
+  box-shadow: 1px 1px 1px #000000, 0 0 1px #0d0d0d;
+  background: #e2e4e7;
+  border-radius: 2px;
+  border: 0 solid #000101;
+}
+input[type=range].rangeButton::-moz-range-thumb {
+  box-shadow: 0 0 1.2px #000000, 0 0 0 #0d0d0d;
+  border: 1.2px solid #000000;
+  height: 34px;
+  width: 26px;
+  border-radius: 4px;
+  background: #343434;
+  cursor: pointer;
+}
+input[type=range].rangeButton::-ms-track {
+  width: 100%;
+  height: 5.6px;
+  cursor: pointer;
+  background: transparent;
+  border-color: transparent;
+  color: transparent;
+}
+input[type=range].rangeButton::-ms-fill-lower {
+  background: #cccfd5;
+  border: 0 solid #000101;
+  border-radius: 4px;
+  box-shadow: 1px 1px 1px #000000, 0 0 1px #0d0d0d;
+}
+input[type=range].rangeButton::-ms-fill-upper {
+  background: #e2e4e7;
+  border: 0 solid #000101;
+  border-radius: 4px;
+  box-shadow: 1px 1px 1px #000000, 0 0 1px #0d0d0d;
+}
+input[type=range].rangeButton::-ms-thumb {
+  box-shadow: 0 0 1.2px #000000, 0 0 0 #0d0d0d;
+  border: 1.2px solid #000000;
+  height: 34px;
+  height: 5.6px;
+  width: 26px;
+  border-radius: 4px;
+  background: #343434;
+  cursor: pointer;
+  
+}
+input[type=range].rangeButton:focus::-ms-fill-lower {
+  background: #e2e4e7;
+}
+input[type=range].rangeButton:focus::-ms-fill-upper {
+  background: #f8f9f9;
+}
+
+.animate-if {
+  background:white;
+  padding:10px;
+}
+
+.animate-if.ng-enter {
+  transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.8s;
+}
+
+.hot {
+  color: #FF4A3B;
+}
+
+.neutral {
+  color: #24B262;
+}
+
+.cold {
+  color: #3E82CC;
+}
+
+.animate-if.ng-enter,
+.animate-if.ng-leave.ng-leave-active {
+  opacity:0;
+}
+
+.animate-if.ng-leave,
+.animate-if.ng-enter.ng-enter-active {
+  opacity:1;
+}

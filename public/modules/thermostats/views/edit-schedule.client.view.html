@@ -1,0 +1,135 @@
+
+<section data-ng-controller="ThermostatsController" data-ng-init="findOne(); setupScheduleView();">
+    <div class="page-header">
+        <h1>Schedule {{thermostat.schedules[scheduleIndex].label}}</h1>
+        <span data-ng-bind="thermostat.schedules[index].scheduleVersion | date:'medium'"></span> 
+    </div>
+    
+    
+    <div class="list-group">
+        
+        <a data-ng-repeat="day in thermostat.schedules[scheduleIndex].days">
+            <div class="col-xs-12">
+                <div class="panel panel-default">
+                  <!-- Default panel contents -->
+                    <div class="panel-heading">
+                        <span data-ng-bind="day.day | weekday"></span>
+                        <button class="btn btn-primary btn-xs pull-right" ng-click="checked = !checked">
+                            <div ng-show="checked">Cancel</div>
+                            <div ng-show="!checked">Add</div>
+                        </button>
+                    </div>
+                  <div class="panel-body">
+                    <div class="row">
+                        <div ng-show="checked">
+                            <div class="col-xs-12 col-sm-4 col-me-3">
+                                <div class="panel panel-success">
+                                    <div class="panel-heading">
+                                        Add a new timePoint
+                                    </div>
+                                    <div class="panel-body">                    
+                                            <form class="form-horizontal">
+                                                <div class="row">
+                                                    <div class="col-xs-8 col-xs-offset-2 ">
+                                                        
+                                                        <div class="input-group">
+                                                            <input type="number" data-ng-model="hour" id="hour" class="form-control" placeholder="hh" required>
+                                                            
+                                                            <span class="input-group-addon" id="basic-addon2">:</span>
+
+                                                            <input type="number" data-ng-model="minute" id="minute" class="form-control" placeholder="mm" required> 
+
+                                                            
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <!-- <div class="col-xs-1">
+                                                        :
+                                                    </div>
+                                                    <div class="col-xs-4">
+                                                        
+                                                    </div> -->
+                                                </div>
+                                                <br>
+                                                <div class="row">
+                                                    <div class="col-xs-12">
+                                                        <input type="number" data-ng-model="desiredTemperature" id="desiredTemperature" class="form-control" placeholder="desired temperature" required>
+                                                        <br>
+                                                    </div>
+                                                    
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-xs-12">
+                                                        <button type="submit" ng-click="addTimePoint(thermostat, scheduleIndex, day, hour, minute, desiredTemperature); checked = false;" class="btn btn-primary btn-block">Submit</button> 
+                                                    </div>
+                                                     
+                                                </div>
+                                                
+                                                
+                                                
+                                                      
+                                                
+                                            </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div google-chart chart="chartObject" ng-init="setChart(day, scheduleIndex, thermostat, chartObject)"></div>
+                    </div>
+                    <div class="row">
+                        <div data-ng-repeat="timePoint in day.timePoints">
+                            <div class="col-xs-12 col-sm-4 col-me-3">
+                                <div class="panel panel-info">
+                                    <div class="panel-heading">
+                                        <span data-ng-bind="timePoint.hour | twoChar"></span>:<span data-ng-bind="timePoint.minute | twoChar"></span>h
+                                        <button class="btn btn-danger btn-xs pull-right" data-ng-click="removeTimePoint(timePoint, day, scheduleIndex, thermostat);">
+                                            <span class="glyphicon glyphicon-remove" ></span>
+                                        </button>
+                                    </div>
+                                    <div class="panel-body">
+                                        <span data-ng-bind="timePoint.desiredTemperature"></span>°C
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+
+                    
+                    <!-- <div class="col-xs-6 text-left text-muted">
+                        <span data-ng-bind="timePoint.hour | twoChar"></span>:<span data-ng-bind="timePoint.minute | twoChar"></span>h
+                    </div>
+                    <div class="col-xs-6 text-right">
+                        <span data-ng-bind="timePoint.desiredTemperature"></span>°C
+                    </div> -->
+                     
+                  </div>
+                  
+                </div>
+            </div>
+            
+              <!-- List group -->
+              <!-- <ul class="list-group">
+                <li class="list-group-item">Cras justo odio</li>
+                <li class="list-group-item">Dapibus ac facilisis in</li>
+                <li class="list-group-item">Morbi leo risus</li>
+                <li class="list-group-item">Porta ac consectetur ac</li>
+                <li class="list-group-item">Vestibulum at eros</li>
+              </ul>
+            </div> 
+                <div class="col-xs-4">
+                    <span data-ng-bind="timePoint.day | weekday" class="label label-primary"></span><br>
+                    <span data-ng-bind="timePoint.day | weekday"></span><br>
+                    <span data-ng-bind="timePoint.hour | twoChar"></span>:<span data-ng-bind="timePoint.minute | twoChar"></span>h<br>
+                    <h4><span data-ng-bind="timePoint.desiredTemperature"></span>°C</h4>
+                </div> -->
+                
+            
+        </a>
+    </div>
+    
+    
+</section>
