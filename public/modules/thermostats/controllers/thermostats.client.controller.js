@@ -369,7 +369,6 @@ angular.module('thermostats')
 
 		// Update existing Thermostat
 		$scope.update = function() {
-			console.log('update');
 			var thermostat = $scope.thermostat;
 
 			thermostat.$update(function() {
@@ -377,6 +376,19 @@ angular.module('thermostats')
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
 			});
+		};
+
+		$scope.connectUser = function() {
+			var thermostat = Thermostats.get({ 
+				thermostatId: this.objectId
+			});
+			thermostat.user = this.authentication.user;
+			thermostat.$update(function() {
+				$location.path('thermostats/' + thermostat._id);
+			}, function(errorResponse) {
+				$scope.error = errorResponse.data.message;
+			});
+
 		};
 
 		// Find a list of Thermostats

@@ -31,7 +31,24 @@ exports.create = function(req, res) {
 	});
 };
 
-
+/*
+ * Link a user with a thermostat
+ */
+exports.linkUser = function(req,res) {
+	var thermostat = req.thermostat ;
+	thermostat.user = req.user;
+	thermostat.save(function(err) {
+		if (err) {
+			return res.status(400).send({
+				message: errorHandler.getErrorMessage(err)
+			});
+		} else {
+			res.jsonp(thermostat);
+			
+			
+		}
+	});
+};
 
 /**
  * Show the current Thermostat
@@ -113,7 +130,7 @@ exports.hasAuthorization = function(req, res, next) {
 		if (req.user.id !== req.thermostat.user.id){
 			return res.status(403).send('User is not authorized');
 		}
-	}
+	} 
 	
 	
 	next();
