@@ -66,6 +66,14 @@ angular.module('thermostats')
 			this.status.desiredTemperature = value;
 		};
 
+		$scope.increaseTemp = function() {
+			this.thermostat.status.desiredTemperature += 0.5;
+		};
+
+		$scope.decreaseTemp = function() {
+			this.thermostat.status.desiredTemperature -= 0.5;
+		};
+
 		$scope.setChart = function(day, scheduleIndex, thermostat, chartObject) {
 			chartObject = {
 			  'type': 'LineChart',
