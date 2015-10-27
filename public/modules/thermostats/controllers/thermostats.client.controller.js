@@ -38,6 +38,7 @@ angular.module('thermostats')
 
 	};
 })
+
 .filter('twoChar', function($filter)
 {
 	return function(input)
@@ -54,12 +55,13 @@ angular.module('thermostats')
 
 	};
 })
+
 .controller('ThermostatsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Thermostats', 
+	
 	function($scope, $stateParams, $location, Authentication, Thermostats) {
-		
-		
 
 		$scope.authentication = Authentication;
+
 		$scope.setDesiredTemp = function(value) {
 			this.status.desiredTemperature = value;
 		};
@@ -406,5 +408,51 @@ angular.module('thermostats')
 				thermostatId: $stateParams.thermostatId
 			});
 		};
+		// Find existing Thermostat
+		$scope.addSchedule = function(thermostat) {
+			var newSchedule = {
+				label: 'N/A',
+				isActive: true,
+				scheduleVersion: Date.now(),
+				days: [{
+					day: 1
+					},{
+					day: 2
+					},{
+					day: 3
+					},{
+					day: 4
+					},{
+					day: 5
+					},{
+					day: 6
+					},{
+					day: 7
+					}
+				]	
+			};
+			thermostat.schedules.push(newSchedule);
+			var lastIndex = thermostat.schedules.length-1;
+
+			// Update
+			thermostat.$update(function() {
+			//$location.path('thermostats/' + thermostat._id);
+			}, function(errorResponse) {
+				$scope.error = errorResponse.data.message;
+			});
+
+			$location.path('thermostats/' + this.thermostat._id + '/schedules/' + lastIndex);
+		};	
+
+		$scope.saveEdit = function() {
+        	$scope.editing = false;
+    	};
+
+
+
+
+
+
+
 	}
 	]);

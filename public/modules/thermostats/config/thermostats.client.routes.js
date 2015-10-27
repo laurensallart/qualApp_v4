@@ -21,6 +21,10 @@ angular.module('thermostats').config(['$stateProvider',
 			url: '/thermostats/:thermostatId/schedules',
 			templateUrl: 'modules/thermostats/views/view-schedules.client.view.html'
 		}).
+		state('addSchedule', {
+			url: '/thermostats/:thermostatId/schedules/addSchedule',
+			templateUrl: 'modules/thermostats/views/add-schedule.client.view.html'
+		}).
 		state('editSchedule', {
 			url: '/thermostats/:thermostatId/schedules/:scheduleIndex',
 			templateUrl: 'modules/thermostats/views/edit-schedule.client.view.html'
