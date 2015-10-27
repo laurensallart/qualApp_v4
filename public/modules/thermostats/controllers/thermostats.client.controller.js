@@ -452,7 +452,5 @@ angular.module('thermostats')
 
 
 
-
-
 	}
 	]);
