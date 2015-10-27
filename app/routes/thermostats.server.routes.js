@@ -13,6 +13,8 @@ module.exports = function(app) {
 		.get(users.requiresLogin, thermostats.hasAuthorization, thermostats.read)
 		.put(users.requiresLogin, thermostats.hasAuthorization, thermostats.update)
 		.delete(users.requiresLogin, thermostats.hasAuthorization, thermostats.delete);
+	app.route('/thermostats/:thermostatId/link')
+		.put(users.requiresLogin, thermostats.hasAuthorization, thermostats.linkUser);
 
 	// Finish by binding the Thermostat middleware
 	app.param('thermostatId', thermostats.thermostatByID);

@@ -3,18 +3,18 @@
         <h1 class="col-md-12 text-center">New Thermostat</h1>
     </div>
     <div class="col-xs-offset-1 col-xs-10 col-md-offset-4 col-md-4">
-        <form class="form-horizontal" data-ng-submit="create()" novalidate>
+        <form class="form-horizontal" data-ng-submit="connectUser()" novalidate>
             <fieldset>
                 <div class="form-group">
                   <div class="input-group input-group-lg controls">
                     <span class="input-group-addon">
                       <i class="text-muted glyphicon glyphicon-tag"></i>
                     </span>
-                    <input type="text" data-ng-model="name" id="name" class="form-control" placeholder="Name" required>
+                    <input type="text" data-ng-model='objectId' id="objectId" class="form-control" placeholder="code" required>
                   </div>
                 </div>
 
-                <div class="form-group">
+                <!-- <div class="form-group">
                   <div class="input-group input-group-lg controls">
                     <span class="input-group-addon">
                       <i class="text-muted glyphicon glyphicon-tag"></i>
@@ -49,7 +49,7 @@
                     </span>
                     <input type="text" data-ng-model="ipAddress" id="ipAddress" class="form-control" placeholder="IP address" required>
                   </div>
-                </div>
+                </div> -->
                 
                 <div class="form-group">
                     <input type="submit" class="btn btn-default">
