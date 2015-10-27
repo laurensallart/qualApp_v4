@@ -448,8 +448,6 @@ angular.module('thermostats')
         	$scope.editing = false;
     	};
 
-    	testertje
-
 
 
 
