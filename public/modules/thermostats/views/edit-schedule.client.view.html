@@ -1,7 +1,7 @@
 <section data-ng-controller="ThermostatsController" data-ng-init="findOne(); setupScheduleView();">
     <div class="page-header">
         
-        <h1>Schedule <form data-ng-submit="update()"> <input ng-class="editing ? 'hasBorder' : 'noBorder'" type="text" ng-model="thermostat.schedules[scheduleIndex].label" ng-focus="editing = true" ng-blur="editing = false"/> </form> </h1>
+        <h1>Schedule <form data-ng-submit="changeScheduleName()"> <input ng-class="editing ? 'hasBorder' : 'noBorder'" type="text" ng-model="thermostat.schedules[scheduleIndex].label" ng-focus="editing = true" ng-blur="editing = false"/> </form> </h1>
         <span data-ng-bind="thermostat.schedules[index].scheduleVersion | date:'medium'"></span> 
     </div>
     

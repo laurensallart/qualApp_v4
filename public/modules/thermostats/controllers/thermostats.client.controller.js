@@ -74,6 +74,15 @@ angular.module('thermostats')
 			this.thermostat.status.desiredTemperature -= 0.5;
 		};
 
+		$scope.removeSchedule = function(scheduleIndex) {
+			this.thermostat.schedules.splice(scheduleIndex, 1);
+			this.thermostat.$update(function() {
+				$location.path('thermostats/' + this.thermostat._id + '/schedules');
+			}, function(errorResponse) {
+				$scope.error = errorResponse.data.message;
+			});
+		};
+
 		$scope.setChart = function(day, scheduleIndex, thermostat, chartObject) {
 			chartObject = {
 			  'type': 'LineChart',
@@ -383,6 +392,16 @@ angular.module('thermostats')
 
 			thermostat.$update(function() {
 				$location.path('thermostats/' + thermostat._id);
+			}, function(errorResponse) {
+				$scope.error = errorResponse.data.message;
+			});
+		};
+
+		$scope.changeScheduleName = function() {
+			var thermostat = $scope.thermostat;
+
+			thermostat.$update(function() {
+				
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
 			});
