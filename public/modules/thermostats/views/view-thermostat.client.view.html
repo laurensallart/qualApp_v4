@@ -16,14 +16,18 @@
 		
 		<div class="row">
 			<div class="col-xs-2">
-				<i STYLE="font-size: 30pt;" class="glyphicon glyphicon-asterisk pull-left"></i>
+				<a data-ng-click="decreaseTemp();" ng-model="thermostat.status.desiredTemperature">
+						<i STYLE="font-size: 30pt;" class="glyphicon glyphicon-asterisk pull-left"></i>
+				</a>
 			</div>
 			<div class="col-xs-8">
 				
 				<input type="range" ng-mouseup="update();" class="rangeButton min="10" max="30" value="thermostat.status.desiredTemperature" step="0.5" ng-model="thermostat.status.desiredTemperature" ng-on>
 			</div>
 			<div class="col-xs-2">
-				<i STYLE="font-size: 30pt;" class="glyphicon glyphicon-fire pull-right"></i>
+				<a data-ng-click="increaseTemp();" ng-model="thermostat.status.desiredTemperature">
+					<i STYLE="font-size: 30pt; color: #FF4A3B" class="glyphicon glyphicon-fire pull-right"></i>
+				</a>
 			</div>
 		</div>
 		<br>
