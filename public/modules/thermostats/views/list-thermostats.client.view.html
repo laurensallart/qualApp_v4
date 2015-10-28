@@ -4,13 +4,15 @@
     </div>
     <div class="list-group">
         <a data-ng-repeat="thermostat in thermostats" data-ng-href="#!/thermostats/{{thermostat._id}}" class="list-group-item">
-			<small class="list-group-item-text">
+			<h4 class="list-group-item-heading" data-ng-bind="thermostat.name"></h4>
+            <div data-ng-bind="thermostat._id"></div>
+            <small class="list-group-item-text">
 				Posted on
 				<span data-ng-bind="thermostat.created | date:'medium'"></span>
 				by
 				<span data-ng-bind="thermostat.user.displayName"></span>
 			</small>
-			<h4 class="list-group-item-heading" data-ng-bind="thermostat.name"></h4>
+			
         </a>
     </div>
     <div class="alert alert-warning text-center" data-ng-hide="!thermostats.$resolved || thermostats.length">
