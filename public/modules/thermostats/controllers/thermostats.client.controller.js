@@ -56,10 +56,11 @@ angular.module('thermostats')
 	};
 })
 
-.controller('ThermostatsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Thermostats', 
+.controller('ThermostatsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Thermostats', '$timeout',
 	
-	function($scope, $stateParams, $location, Authentication, Thermostats) {
+	function($scope, $stateParams, $location, Authentication, Thermostats, $timeout) {
 
+		$scope.isCollapsed = true;
 		$scope.authentication = Authentication;
 
 		$scope.setDesiredTemp = function(value) {
@@ -218,6 +219,7 @@ angular.module('thermostats')
 			  	});
 			});
 			this.chartObject = chartObject;
+
 
 		};
 
