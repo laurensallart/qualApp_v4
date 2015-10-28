@@ -7,7 +7,8 @@ module.exports = function(app) {
 	// Thermostats Routes
 	app.route('/thermostats')
 		.get(users.requiresLogin, thermostats.list)
-		.post(users.requiresLogin, thermostats.create);
+		.post(users.requiresLogin, thermostats.create)
+		.put(users.requiresLogin, thermostats.addUser);
 
 	app.route('/thermostats/:thermostatId')
 		.get(users.requiresLogin, thermostats.hasAuthorization, thermostats.read)

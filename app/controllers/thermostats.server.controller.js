@@ -32,6 +32,13 @@ exports.create = function(req, res) {
 };
 
 /*
+ * add a user to a thermostat
+ */
+exports.addUser = function(req, res) {
+	console.log(req.body);
+};
+
+/*
  * Link a user with a thermostat
  */
 exports.linkUser = function(req,res) {
@@ -99,7 +106,16 @@ exports.delete = function(req, res) {
  * List of Thermostats
  */
 exports.list = function(req, res) { 
-	Thermostat.find({user: req.user}).sort('-created').populate('user', 'displayName').exec(function(err, thermostats) {
+	// Thermostat.find({user: req.user}).sort('-created').populate('user', 'displayName').exec(function(err, thermostats) {
+	// 	if (err) {
+	// 		return res.status(400).send({
+	// 			message: errorHandler.getErrorMessage(err)
+	// 		});
+	// 	} else {
+	// 		res.jsonp(thermostats);
+	// 	}
+	// });
+	Thermostat.find().sort('-created').populate('user', 'displayName').exec(function(err, thermostats) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)

@@ -5,7 +5,7 @@ var mongoose = require('mongoose'),
 	dgram = require('dgram');
 var serverUDP = dgram.createSocket('udp4');
 var serverIP = '';
-var SERVERPORT = 8080;
+var SERVERPORT = 2390;
 
 var udpSend = function(message) {
 	var HOST = serverIP;
@@ -21,18 +21,24 @@ var pngRequest = function() {
 	udpSend(message);
 };
 
-var ithRequest = function(msg) {
-	var params = msg.toString().split('&');
+var ithRequest = function(msg, address) {
 	var thermostat = new Thermostat({
-		'name': params[0],
-		'ipAddress': params[1]
+		'name': msg.toString(),
+		'ipAddress': address,
+		'status': {
+			'desiredTemperature': 16,
+			'heaterStatus': false
+		}
 	});
 
+	console.log('new thermostat initiated');
 	thermostat.save(function(err) {
 		if (!err) {
 			udpSend('ITH=' + thermostat._id);
 			console.log('ITH=' + thermostat._id);
 
+		} else {
+			console.log('failed to send UDP message');
 		}
 	});
 };
@@ -54,7 +60,7 @@ exports.init = function() {
 
 		  switch(msg.toString().substring(0,4)) {
 		  	case 'PNG?': pngRequest(); break;
-		  	case 'ITH=': ithRequest(msg.toString().substring(4)); break;
+		  	case 'ITH=': ithRequest(msg.toString().substring(4), rinfo.address); break;
 		  }
 
 	});

@@ -68,10 +68,20 @@ angular.module('thermostats')
 
 		$scope.increaseTemp = function() {
 			this.thermostat.status.desiredTemperature += 0.5;
+			this.thermostat.$update(function() {
+				
+			}, function(errorResponse) {
+				$scope.error = errorResponse.data.message;
+			});
 		};
 
 		$scope.decreaseTemp = function() {
 			this.thermostat.status.desiredTemperature -= 0.5;
+			this.thermostat.$update(function() {
+				
+			}, function(errorResponse) {
+				$scope.error = errorResponse.data.message;
+			});
 		};
 
 		$scope.removeSchedule = function(scheduleIndex) {
@@ -148,33 +158,34 @@ angular.module('thermostats')
 			  		time2 = thermostat.schedules[scheduleIndex].days[indexDay].timePoints[index+1].hour + thermostat.schedules[scheduleIndex].days[indexDay].timePoints[index+1].minute/60;
 			  	} 
 			  	if(index === 0) {
-			  		chartObject.data.rows.push({
-
-				        'c': [
-				          {
-				            'v': 0,
-				            'p': {}
-				          },
-				          {
-				            'v': thermostat.schedules[scheduleIndex].days[previousDay].timePoints[thermostat.schedules[scheduleIndex].days[previousDay].timePoints.length-1].desiredTemperature,
-				            'p': {}
-				          },
-				          null
-				        ]
-				      
-				  	},{
-				  		'c': [
-				          {
-				            'v': time,
-				            'p': {}
-				          },
-				          {
-				            'v': thermostat.schedules[scheduleIndex].days[previousDay].timePoints[thermostat.schedules[scheduleIndex].days[previousDay].timePoints.length-1].desiredTemperature,
-				            'p': {}
-				          },
-				          null
-				        ]
-				  	});
+			  		if(thermostat.schedules[scheduleIndex].days[previousDay].timePoints.length !== 0) {
+			  			chartObject.data.rows.push({
+					        'c': [
+					          {
+					            'v': 0,
+					            'p': {}
+					          },
+					          {
+					            'v': thermostat.schedules[scheduleIndex].days[previousDay].timePoints[thermostat.schedules[scheduleIndex].days[previousDay].timePoints.length-1].desiredTemperature,
+					            'p': {}
+					          },
+					          null
+					        ]
+					      
+					  	},{
+					  		'c': [
+					          {
+					            'v': time,
+					            'p': {}
+					          },
+					          {
+					            'v': thermostat.schedules[scheduleIndex].days[previousDay].timePoints[thermostat.schedules[scheduleIndex].days[previousDay].timePoints.length-1].desiredTemperature,
+					            'p': {}
+					          },
+					          null
+					        ]
+					  	});
+			  		}		
 			  	} 
 			  	
 			  	
@@ -192,10 +203,8 @@ angular.module('thermostats')
 			          null
 			        ]
 			      
-			  	});
-			  	chartObject.data.rows.push({
-
-			        'c': [
+			  	},{
+			  		'c': [
 			          {
 			            'v': time2,
 			            'p': {}
@@ -206,7 +215,6 @@ angular.module('thermostats')
 			          },
 			          null
 			        ]
-			      
 			  	});
 			});
 			this.chartObject = chartObject;
@@ -410,14 +418,13 @@ angular.module('thermostats')
 		$scope.connectUser = function() {
 			var thermostat = Thermostats.get({ 
 				thermostatId: this.objectId
+			}, function() {
+				thermostat.user = $scope.authentication.user._id;
+				thermostat.$update(function() {
+				}, function(errorResponse) {
+					$scope.error = errorResponse.data.message;
+				});
 			});
-			thermostat.user = this.authentication.user;
-			thermostat.$update(function() {
-				$location.path('thermostats/' + thermostat._id);
-			}, function(errorResponse) {
-				$scope.error = errorResponse.data.message;
-			});
-
 		};
 
 		// Find a list of Thermostats
