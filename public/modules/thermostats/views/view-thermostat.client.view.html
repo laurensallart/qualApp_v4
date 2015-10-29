@@ -23,7 +23,7 @@
 			</div>
 			<div class="col-xs-8">
 				
-				<input type="range" ng-click="update();" class="rangeButton min="10" max="30" value="parseInt(thermostat.status.desiredTemperature)" step="0.5" ng-model="thermostat.status.desiredTemperature">
+				<input type="range" ng-mouseUp="update();" class="rangeButton min="10" max="30" value="parseInt(thermostat.status.desiredTemperature)" step="0.5" ng-model="thermostat.status.desiredTemperature">
 			</div>
 			<div class="col-xs-2">
 				<a data-ng-click="increaseTemp();" ng-model="thermostat.status.desiredTemperature">
