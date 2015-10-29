@@ -63,26 +63,33 @@ angular.module('thermostats')
 		$scope.isCollapsed = true;
 		$scope.authentication = Authentication;
 
+
 		$scope.setDesiredTemp = function(value) {
 			this.status.desiredTemperature = value;
 		};
 
 		$scope.increaseTemp = function() {
-			this.thermostat.status.desiredTemperature += 0.5;
-			this.thermostat.$update(function() {
-				
-			}, function(errorResponse) {
-				$scope.error = errorResponse.data.message;
-			});
+			console.log(this);
+			if(this.thermostat.status.desiredTemperature < 30) {
+				this.thermostat.status.desiredTemperature += 0.5;
+				this.thermostat.$update(function() {
+					
+				}, function(errorResponse) {
+					$scope.error = errorResponse.data.message;
+				});
+			}
+			
 		};
 
 		$scope.decreaseTemp = function() {
-			this.thermostat.status.desiredTemperature -= 0.5;
-			this.thermostat.$update(function() {
-				
-			}, function(errorResponse) {
-				$scope.error = errorResponse.data.message;
-			});
+			if(this.thermostat.status.desiredTemperature > 0) {
+				this.thermostat.status.desiredTemperature -= 0.5;
+				this.thermostat.$update(function() {
+					
+				}, function(errorResponse) {
+					$scope.error = errorResponse.data.message;
+				});
+			}
 		};
 
 		$scope.removeSchedule = function(scheduleIndex) {

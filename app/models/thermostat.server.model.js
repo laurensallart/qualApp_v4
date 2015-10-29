@@ -84,6 +84,9 @@ var ThermostatSchema = new Schema({
 		required: 'please give in an IP address',
 		trim: true
 	},
+	udpPort: {
+		type: Number
+	},
 	created: {
 		type: Date,
 		default: Date.now
