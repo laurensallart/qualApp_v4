@@ -9,8 +9,9 @@ var mongoose = require('mongoose'),
 	Thermostat = mongoose.model('Thermostat'),
 	Schedule = mongoose.model('Schedule'),
 	_ = require('lodash'),
-	UDPService = require('../services/UDPService.js').init();
+	UDPService = require('../services/UDPService.js');
 
+UDPService.init();
 /**
  * Create a Thermostat
  */
@@ -134,6 +135,7 @@ exports.thermostatByID = function(req, res, next, id) {
 		if (err) return next(err);
 		if (! thermostat) return next(new Error('Failed to load Thermostat ' + id));
 		req.thermostat = thermostat ;
+		//UDPService.cstRequest(thermostat);
 		next();
 	});
 };
