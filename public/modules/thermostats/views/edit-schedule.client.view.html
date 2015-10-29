@@ -1,7 +1,7 @@
-<section data-ng-controller="ThermostatsController" data-ng-init="findOne(); setupScheduleView();">
+<section data-ng-controller="ThermostatsController" data-ng-init="findOne(); setupScheduleView(); ">
     <div class="page-header">
         
-        <h1>Schedule <form data-ng-submit="update()"> <input ng-class="editing ? 'hasBorder' : 'noBorder'" type="text" ng-model="thermostat.schedules[scheduleIndex].label" ng-focus="editing = true" ng-blur="editing = false"/> </form> </h1>
+        <h1>Schedule <form data-ng-submit="changeScheduleName()"> <input ng-class="editing ? 'hasBorder' : 'noBorder'" type="text" ng-model="thermostat.schedules[scheduleIndex].label" ng-focus="editing = true" ng-blur="editing = false"/> </form> </h1>
         <span data-ng-bind="thermostat.schedules[index].scheduleVersion | date:'medium'"></span> 
     </div>
     
@@ -12,14 +12,14 @@
             <div class="col-xs-12">
                 <div class="panel panel-info">
                   <!-- Default panel contents -->
-                    <div class="panel-heading">
+                    <div class="panel-heading" ng-click="isCollapsed = !isCollapsed">
                         <span data-ng-bind="day.day | weekday"></span>
-                        <button class="btn btn-primary btn-xs pull-right" ng-click="checked = !checked">
+                        <button class="btn btn-primary btn-xs pull-right" ng-click="checked = !checked" ng-if="!isCollapsed">
                             <div ng-show="checked">Cancel</div>
                             <div ng-show="!checked">Add</div>
                         </button>
                     </div>
-                  <div class="panel-body">
+                  <div class="panel-body" collapse="isCollapsed">
                     <div class="row">
                         <div ng-show="checked">
                             <div class="col-xs-12 col-sm-4 col-me-3">
@@ -29,19 +29,21 @@
                                     </div>
                                     <div class="panel-body">                    
                                             <form class="form-horizontal">
+                                                <span class="row pull-center">
+                                                    <h3>hh  :  mm</h3>
+                                                </span>
                                                 <div class="row">
-                                                    <div class="col-xs-8 col-xs-offset-2 col-sm-12 col-sm-offset-0">
-                                                        
-                                                        <div class="input-group">
-                                                            <input type="number" data-ng-model="hour" id="hour" class="form-control" placeholder="hh" required>
-                                                            
-                                                            <span class="input-group-addon" id="basic-addon2">:</span>
+                                                    
+                                                        <div class="col-xs-4 col-xs-offset-2 col-sm-6 col-sm-offset-0">    
+                                                            <input type="number" min="0" max="23" data-ng-model="hour" ng-init="hour=00" id="hour" class="form-control" placeholder="hh" required>
+                                                        </div> 
 
-                                                            <input type="number" data-ng-model="minute" id="minute" class="form-control" placeholder="mm" required> 
+                                                        <div class="col-xs-4  col-sm-6">    
+
+                                                            <input type="number" min="0" max="59" ng-init="minute=00" data-ng-model="minute" id="minute" class="form-control" placeholder="mm" required> 
 
                                                             
                                                         </div>
-                                                    </div>
                                                     
                                                     <!-- <div class="col-xs-1">
                                                         :
@@ -53,7 +55,7 @@
                                                 <br>
                                                 <div class="row">
                                                     <div class="col-xs-12">
-                                                        <input type="number" data-ng-model="desiredTemperature" id="desiredTemperature" class="form-control" placeholder="desired temperature" required>
+                                                        <input type="number" min="10" max="30" data-ng-model="desiredTemperature" id="desiredTemperature" class="form-control" placeholder="desired temperature" required>
                                                         <br>
                                                     </div>
                                                     
@@ -76,8 +78,10 @@
                         </div>
                     </div>
                     
-                    <div class="row">
-                        <div google-chart chart="chartObject" ng-init="setChart(day, scheduleIndex, thermostat, chartObject)"></div>
+                    <div class="row" >
+                        <div class="col-xs-12" ng-if="!isCollapsed">
+                            <div google-chart chart="chartObject" ng-init="setChart(day, scheduleIndex, thermostat, chartObject)"></div>
+                        </div>
                     </div>
                     <div class="row">
                         <div data-ng-repeat="timePoint in day.timePoints">

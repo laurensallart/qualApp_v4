@@ -1,9 +1,10 @@
 <section data-ng-controller="ThermostatsController" data-ng-init="findOne()">
+<!-- <section data-ng-controller="ThermostatsController" data-ng-init="findOne()" data-ng-show="(authentication.user._id == thermostat.user._id)"> -->
 	<div class="page-header">
 		<h2 data-ng-bind="thermostat.name" class="text-center"></h2>
 	</div>
     
-    <div ng-if="thermostat.status.currentTemperature">
+    <div>
     	<div class="row">
 			<div class="col-md-4 col-md-offset-4 col-xs-6 col-xs-offset-3">
 				<div class="jumbotron text-center">
@@ -16,14 +17,18 @@
 		
 		<div class="row">
 			<div class="col-xs-2">
-				<i STYLE="font-size: 30pt;" class="glyphicon glyphicon-asterisk pull-left"></i>
+				<a data-ng-click="decreaseTemp();" ng-model="thermostat.status.desiredTemperature">
+						<i STYLE="font-size: 30pt;" class="glyphicon glyphicon-asterisk pull-left"></i>
+				</a>
 			</div>
 			<div class="col-xs-8">
 				
 				<input type="range" ng-mouseup="update();" class="rangeButton min="10" max="30" value="thermostat.status.desiredTemperature" step="0.5" ng-model="thermostat.status.desiredTemperature" ng-on>
 			</div>
 			<div class="col-xs-2">
-				<i STYLE="font-size: 30pt;" class="glyphicon glyphicon-fire pull-right"></i>
+				<a data-ng-click="increaseTemp();" ng-model="thermostat.status.desiredTemperature">
+					<i STYLE="font-size: 30pt; color: #FF4A3B" class="glyphicon glyphicon-fire pull-right"></i>
+				</a>
 			</div>
 		</div>
 		<br>
@@ -45,42 +50,33 @@
 
 		<h4 class="text-center">the room temperature is {{thermostat.status.currentTemperature}}°C at this moment.</h4>
 	    <br>
-		<div data-ng-show="((authentication.user) && (authentication.user._id == thermostat.user._id))">
-			<!-- <div class="row">
-				<div class="col-xs-10 col-xs-offset-1 col-md-4 col-md-offset-4">
-					<a class="btn btn-success btn-lg btn-block" data-ng-click="update();">
-					
-						<i class="glyphicon glyphicon-floppy-disk"></i>
-						Save
-					</a>
-				</div>
-			</div> -->
-			<br>
-			<div class="row">
-				<div class="col-xs-10 col-xs-offset-1 col-md-4 col-md-offset-4">
-					<a class="btn btn-default btn-lg btn-block" data-ng-click="showSchedules();">
-						<i class="glyphicon glyphicon-calendar"></i> Schedules
-					</a>
-				</div>
-			</div>
-			<br>
-			<div class="row">
-				<div class="col-xs-10 col-xs-offset-1 col-md-4 col-md-offset-4">
-					<a class="btn btn-danger btn-lg btn-block" data-ng-click="remove();">
-						<i class="glyphicon glyphicon-trash"></i> Delete thermostat
-					</a>
-				</div>
-			</div>
-			<br>
-			
-			
-			
+	 </div>
 
+	<div ng-if="!thermostat.status.currentTemperature">
+		<alert type="danger" ng-if="!thermostat.status.currentTemperature" class="text-center text-danger">
+	      	<span>Not possible to get the current temperature.</span>
+	    </alert>
+	</div>
 
+	<div class="row">
+		<div class="col-xs-10 col-xs-offset-1 col-md-4 col-md-offset-4">
+			<a class="btn btn-default btn-lg btn-block" data-ng-click="showSchedules();">
+				<i class="glyphicon glyphicon-calendar"></i> Schedules
+			</a>
 		</div>
-    </div>
-	<alert type="danger" ng-if="!thermostat.status.currentTemperature" class="text-center text-danger">
-      <span>error</span>
-    </alert>
+	</div>
+	<br>
+	<div class="row">
+		<div class="col-xs-10 col-xs-offset-1 col-md-4 col-md-offset-4">
+			<a class="btn btn-danger btn-lg btn-block" data-ng-click="remove();">
+				<i class="glyphicon glyphicon-trash"></i> Delete thermostat
+			</a>
+		</div>
+	</div>
+	<br>
+ 
+	
+
+    
 	
 </section>

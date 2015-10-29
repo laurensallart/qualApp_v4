@@ -5,10 +5,11 @@
     <div class="col-xs-offset-1 col-xs-10 col-md-offset-4 col-md-4">
         <form class="form-horizontal" data-ng-submit="connectUser()" novalidate>
             <fieldset>
+                
                 <div class="form-group">
                   <div class="input-group input-group-lg controls">
                     <span class="input-group-addon">
-                      <i class="text-muted glyphicon glyphicon-tag"></i>
+                      <i class="text-muted glyphicon glyphicon-link"></i>
                     </span>
                     <input type="text" data-ng-model='objectId' id="objectId" class="form-control" placeholder="code" required>
                   </div>
@@ -52,7 +53,7 @@
                 </div> -->
                 
                 <div class="form-group">
-                    <input type="submit" class="btn btn-default">
+                    <input type="submit" class="btn btn-success btn-block btn-lg">
                 </div>
 				<div data-ng-show="error" class="text-danger">
 					<strong data-ng-bind="error"></strong>
