@@ -27,7 +27,6 @@ module.exports = {
 				'public/lib/angular-ui-utils/ui-utils.js',
 				'public/lib/angular-bootstrap/ui-bootstrap.js',
 				'public/lib/angular-google-chart/ng-google-chart.js',
-				'public/lib/ngtouchend/build/ngTouchend.min.js',
 			]
 		},
 		css: [
