@@ -36,7 +36,26 @@ var ithRequest = function(msg, rinfo) {
 	});
 };
 
+var cstRequest = function(msg, thermostat) {
+	var params = msg.split('&');
+	console.log(params[0]);
+	console.log(params[1]);
+	console.log(params[2].slice(0, -1));
+	thermostat.status.desiredTemperature = params[0];
+	thermostat.status.currentTemperature = params[1];
+	thermostat.status.heaterStatus = Boolean(parseInt(params[2]));
 
+	thermostat.save(function(err) {
+		console.log('saved');
+	});
+
+};
+
+var getThermostat = function(id, cb) {
+	Thermostat.findById(id).populate('user', 'displayName').exec(function(err, thermostat) {
+		cb(thermostat);
+	});
+};
 
 
 exports.init = function() {
@@ -50,10 +69,22 @@ exports.init = function() {
 	  console.log('server got: ' + msg + ' from ' +
 	    rinfo.address + ':' + rinfo.port);
 
-		  switch(msg.toString().substring(0,4)) {
+		  switch(msg.toString().substring(0, 4)) {
 		  	case 'PNG?': pngRequest(rinfo); break;
 		  	case 'ITH=': ithRequest(msg.toString().substring(4), rinfo); break;
 
+		  }
+		  if(msg.toString().length > 24) {
+		  	var thermostat = getThermostat(msg.toString().substring(0, 24), function(thermostat, err) {
+		  		if (thermostat) {
+		  			if(msg.toString()[24] === '/') {
+		  				switch(msg.toString().substring(25, 29)) {
+		  					case 'CST=': cstRequest(msg.toString().substring(29), thermostat); break; 
+		  				}
+		  			}
+		  		}
+		  	});
+		  	
 		  }
 
 	});

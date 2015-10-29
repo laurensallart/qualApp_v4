@@ -423,6 +423,7 @@ angular.module('thermostats')
 			}, function() {
 				thermostat.user = $scope.authentication.user._id;
 				thermostat.$update(function() {
+					$location.path('thermostats');
 				}, function(errorResponse) {
 					$scope.error = errorResponse.data.message;
 				});
