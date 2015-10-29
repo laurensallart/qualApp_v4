@@ -4,11 +4,14 @@ var mongoose = require('mongoose'),
 	Thermostat = mongoose.model('Thermostat'),
 	dgram = require('dgram');
 var serverUDP = dgram.createSocket('udp4');
+var waitingCDT = false,
+	waitingCSC = false,
+	waitingCST = false;
 
 var udpSend = function(message, rinfo) {
 	serverUDP.send(message, 0, message.length, rinfo.port, rinfo.address, function(err, bytes) {
 	    if (err) throw err;
-	    console.log('UDP message sent to ' + rinfo.address +':'+ rinfo.port);
+	    console.log('UDP message send: ' + message + ' to ' + rinfo.address +':'+ rinfo.port);
 	    
 	});
 };
@@ -36,19 +39,38 @@ var ithRequest = function(msg, rinfo) {
 	});
 };
 
-var cstRequest = function(msg, thermostat) {
-	var params = msg.split('&');
-	console.log(params[0]);
-	console.log(params[1]);
-	console.log(params[2].slice(0, -1));
-	thermostat.status.desiredTemperature = params[0];
-	thermostat.status.currentTemperature = params[1];
-	thermostat.status.heaterStatus = Boolean(parseInt(params[2]));
+var cstRequest = function(msg, thermostat, rinfo) {
+	
+	if (rinfo.address === thermostat.ipAddress) {
+		var params = msg.split('&');
+		if (params.length === 3) {
+			thermostat.status.desiredTemperature = params[0];
+			thermostat.status.currentTemperature = params[1];
+			thermostat.status.heaterStatus = Boolean(parseInt(params[2].slice(0, -1)));
+			thermostat.save(function(err) {
+				if (err) {
+					udpSend('CST!', rinfo);
+				} else {
+					udpSend('CST=OK$', rinfo);				
+				}
+			});
+		} else {
+			udpSend('CST!', rinfo);
+		}
+		
+	}
+};
 
+var cipRequest = function(msg, thermostat, rinfo) {
+	msg = msg.slice(0, -1);
+	thermostat.ipAddress = msg;
 	thermostat.save(function(err) {
-		console.log('saved');
+		if (err) {
+			udpSend('CIP!', rinfo);
+		} else {
+			udpSend('CIP=OK', rinfo);
+		}
 	});
-
 };
 
 var getThermostat = function(id, cb) {
@@ -66,7 +88,7 @@ exports.init = function() {
 	});
 
 	serverUDP.on('message', function (msg, rinfo) {
-	  console.log('server got: ' + msg + ' from ' +
+	  console.log('UDP message received: ' + msg + ' from ' +
 	    rinfo.address + ':' + rinfo.port);
 
 		  switch(msg.toString().substring(0, 4)) {
@@ -79,7 +101,8 @@ exports.init = function() {
 		  		if (thermostat) {
 		  			if(msg.toString()[24] === '/') {
 		  				switch(msg.toString().substring(25, 29)) {
-		  					case 'CST=': cstRequest(msg.toString().substring(29), thermostat); break; 
+		  					case 'CST=': cstRequest(msg.toString().substring(29), thermostat,rinfo); break; 
+		  					case 'CIP=': cipRequest(msg.toString().substring(29), thermostat,rinfo); break;
 		  				}
 		  			}
 		  		}
