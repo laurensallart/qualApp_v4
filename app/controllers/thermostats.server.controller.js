@@ -15,7 +15,7 @@ UDPService.init();
 /**
  * Create a Thermostat
  */
-exports.create = function(req, res) {
+module.exports.create = function(req, res) {
 	var thermostat = new Thermostat(req.body);
 	thermostat.user = req.user;
 
@@ -26,23 +26,23 @@ exports.create = function(req, res) {
 			});
 		} else {
 			res.jsonp(thermostat);
-
-
 		}
 	});
+
+
 };
 
 /*
  * add a user to a thermostat
  */
-exports.addUser = function(req, res) {
+module.exports.addUser = function(req, res) {
 	console.log(req.body);
 };
 
 /*
  * Link a user with a thermostat
  */
-exports.linkUser = function(req,res) {
+module.exports.linkUser = function(req,res) {
 	var thermostat = req.thermostat ;
 	thermostat.user = req.user;
 	thermostat.save(function(err) {
@@ -61,14 +61,14 @@ exports.linkUser = function(req,res) {
 /**
  * Show the current Thermostat
  */
-exports.read = function(req, res) {
+module.exports.read = function(req, res) {
 	res.jsonp(req.thermostat);
 };
 
 /**
  * Update a Thermostat
  */
-exports.update = function(req, res) {
+module.exports.update = function(req, res) {
 	var thermostat = req.thermostat ;
 
 	thermostat = _.extend(thermostat , req.body);
@@ -89,7 +89,7 @@ exports.update = function(req, res) {
 /**
  * Delete an Thermostat
  */
-exports.delete = function(req, res) {
+module.exports.delete = function(req, res) {
 	var thermostat = req.thermostat ;
 
 	thermostat.remove(function(err) {
@@ -106,7 +106,7 @@ exports.delete = function(req, res) {
 /**
  * List of Thermostats
  */
-exports.list = function(req, res) { 
+module.exports.list = function(req, res) { 
 	// Thermostat.find({user: req.user}).sort('-created').populate('user', 'displayName').exec(function(err, thermostats) {
 	// 	if (err) {
 	// 		return res.status(400).send({
@@ -130,7 +130,7 @@ exports.list = function(req, res) {
 /**
  * Thermostat middleware
  */
-exports.thermostatByID = function(req, res, next, id) { 
+module.exports.thermostatByID = function(req, res, next, id) { 
 	Thermostat.findById(id).populate('user', 'displayName').exec(function(err, thermostat) {
 		if (err) return next(err);
 		if (! thermostat) return next(new Error('Failed to load Thermostat ' + id));
@@ -143,7 +143,7 @@ exports.thermostatByID = function(req, res, next, id) {
 /**
  * Thermostat authorization middleware
  */
-exports.hasAuthorization = function(req, res, next) {
+module.exports.hasAuthorization = function(req, res, next) {
 	if (req.thermostat.user) {
 		if (req.user.id !== req.thermostat.user.id){
 			return res.status(403).send('User is not authorized');
@@ -153,3 +153,9 @@ exports.hasAuthorization = function(req, res, next) {
 	
 	next();
 };
+
+// exports.sendJSONdata = function(req, res) {
+// 	console.log('Here! #2');
+// 	//input: active schedule
+// 	//UDPService.sendJSONdata(message,address,port);
+// }
