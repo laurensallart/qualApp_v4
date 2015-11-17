@@ -109,7 +109,7 @@ exports.init = function() {
 			rinfo.address + ':' + rinfo.port);
 
 		switch(msg.toString().substring(0, 5)) {
-			case '/ITH=': ithResponse(msg.toString().substring(5), rinfo); break
+			case '/ITH=': ithResponse(msg.toString().substring(5), rinfo); break;
 
 		}
 		if(msg.toString().length > 24) {

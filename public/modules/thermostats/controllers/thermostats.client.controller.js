@@ -506,7 +506,7 @@ angular.module('thermostats')
 
     	$scope.activateSchedule = function(scheduleIndex) {
     		var CurrentActivity = this.thermostat.schedules[scheduleIndex].isActive;
-    		if(CurrentActivity == true){
+    		if(CurrentActivity === true){
     			this.thermostat.schedules[scheduleIndex].isActive = !this.thermostat.schedules[scheduleIndex].isActive;	
     			this.thermostat.$update(function() {
 				}, function(errorResponse) {
@@ -514,28 +514,28 @@ angular.module('thermostats')
 				});
     		} else {
 				var ActiveSchedule=false;
-    			if(scheduleIndex==0){
+    			if(scheduleIndex === 0){
     				for (var i = 1; i<this.thermostat.schedules.length; i++) {
-    					if(this.thermostat.schedules[i].isActive == true){
+    					if(this.thermostat.schedules[i].isActive === true){
     						console.log('Only one actived schedule allowed');
-    						var ActiveSchedule=true;
+    						ActiveSchedule=true;
     						break;
     					}
-    				};
+    				}
     			} else {
-    				var i = 0;
+    				var k = 0;
     				var j = scheduleIndex+1;
-	    			while(i<this.thermostat.schedules.length-1) {
-	    				if(this.thermostat.schedules[j%this.thermostat.schedules.length].isActive == true){
+	    			while(k<this.thermostat.schedules.length-1) {
+	    				if(this.thermostat.schedules[j%this.thermostat.schedules.length].isActive === true){
 	    					console.log('Only one actived schedule allowed');
-	    					var ActiveSchedule=true;
+	    					ActiveSchedule=true;
     						break;
 	    				}
-	    				i=i+1;
+	    				k=k+1;
 	    				j=j+1;
 	    			}
 	    		}
-	    		if(ActiveSchedule==false){
+	    		if(ActiveSchedule === false){
     				this.thermostat.schedules[scheduleIndex].isActive = !this.thermostat.schedules[scheduleIndex].isActive;
    					this.thermostat.$update(function() {
 					}, function(errorResponse) {
