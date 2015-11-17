@@ -109,7 +109,7 @@ exports.init = function() {
 			rinfo.address + ':' + rinfo.port);
 
 		switch(msg.toString().substring(0, 5)) {
-			case '/ITH=': ithResponse(msg.toString().substring(5), rinfo); break;
+			case '/ITH=': ithResponse(msg.toString().substring(5), rinfo); break
 
 		}
 		if(msg.toString().length > 24) {
@@ -117,6 +117,7 @@ exports.init = function() {
 				if (thermostat) {
 					if(msg.toString()[24] === '/') {
 						switch(msg.toString().substring(25, 29)) {
+							//CST: Current Status = desiredTemp&currentTemp&heaterstatus
 							case 'CST=': cstResponse(msg.toString().substring(29), thermostat, rinfo); break; 
 							case 'CIP=': cipResponse(msg.toString().substring(29), thermostat, rinfo); break;
 
@@ -132,3 +133,10 @@ exports.init = function() {
 	serverUDP.bind(12345);
 };
 
+// exports.sendJSONdata = function(JSONdata, address, port) {
+// 	// serverUDP.send(JSONdata, 0, message.length, port, address, function(err, bytes) {
+// 	// 	if (err) throw err;
+// 	// 	console.log('UDP message send: ' + message + ' to ' + address +':'+ port);
+
+// 	// });	
+// }
