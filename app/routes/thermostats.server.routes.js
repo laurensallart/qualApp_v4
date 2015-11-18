@@ -7,13 +7,14 @@ module.exports = function(app) {
 	// Thermostats Routes
 	app.route('/thermostats')
 		.get(users.requiresLogin, thermostats.list)
+		// .post(users.requiresLogin, thermostats.create, thermostats.sendJSONdata);
 		.post(users.requiresLogin, thermostats.create);
 
 	app.route('/thermostats/:thermostatId')
 		.get(users.requiresLogin, thermostats.hasAuthorization, thermostats.read)
 		.put(users.requiresLogin, thermostats.hasAuthorization, thermostats.update)
-		.delete(users.requiresLogin, thermostats.hasAuthorization, thermostats.delete);
-	
+		// respond with "" when a DELETE request is made to /thermostats/:thermostatId
+		.delete(users.requiresLogin, thermostats.hasAuthorization, thermostats.delete);	
 
 	// Finish by binding the Thermostat middleware
 	app.param('thermostatId', thermostats.thermostatByID);
