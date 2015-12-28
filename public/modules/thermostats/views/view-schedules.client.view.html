@@ -7,21 +7,30 @@
             <h4>
                 <a data-ng-href="#!/thermostats/{{thermostat._id}}/schedules/{{$index}}" data-ng-bind="schedule.label">
                 </a>
-                <button class="btn btn-danger btn-xs pull-right" data-ng-click="removeSchedule($index);">
-                    <span class="glyphicon glyphicon-remove" ></span>
-                </button>
-                <button class="btn btn-default btn-xs pull-right" data-ng-click="activateSchedule($index);">
-                    <span ng-class="{true: 'glyphicon glyphicon-pause', false: 'glyphicon glyphicon-play'}[thermostat.schedules[$index].isActive]"></span>
-                </button>
+                <div class="pull-right">
+                    <button class="btn btn-default btn-xs" data-ng-click="activateSchedule($index);">
+                        <span ng-class="{true: 'glyphicon glyphicon-pause', false: 'glyphicon glyphicon-play'}[thermostat.schedules[$index].isActive]"></span>
+                    </button>
+                    <button class="btn btn-danger btn-xs" data-ng-click="removeSchedule($index);">
+                        <span class="glyphicon glyphicon-remove" ></span>
+                    </button>
+                </div>
+                
+                
             </h4>
         </div>
     </div>
     <div class="alert alert-warning text-center" data-ng-hide="!thermostats.$resolved || thermostats.length">
     	No schedules yet, why don't you <a href="/#!/thermostats/{{thermostat._id}}/schedules/create">create one</a>?
     </div>
-    <div class="col-xs-10 col-xs-offset-1 col-md-4 col-md-offset-4">
+    <div class="col-xs-12 col-md-4 col-md-offset-4">
+        &nbsp;
         <a class="btn btn-success btn-lg btn-block" data-ng-click="addSchedule(thermostat)">
             <i class="glyphicon glyphicon-plus"></i> Add schedule
+        </a> 
+        &nbsp;
+        <a class="btn btn-default btn-lg btn-block" data-ng-href="#!/thermostats/{{thermostat._id}}">
+            <i class="glyphicon glyphicon-circle-arrow-left"></i> back
         </a>  
     </div>
 
