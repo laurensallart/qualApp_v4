@@ -94,7 +94,11 @@ var ThermostatSchema = new Schema({
 	user: {
 		type: Schema.ObjectId,
 		ref: 'User'
-	}
+	},
+	users: [{
+		type: Schema.ObjectId,
+		ref: 'User'
+	}]
 });
 
 var ScheduleSchema = new Schema({

@@ -32,6 +32,10 @@ angular.module('thermostats').config(['$stateProvider',
 		state('editThermostat', {
 			url: '/thermostats/:thermostatId/edit',
 			templateUrl: 'modules/thermostats/views/edit-thermostat.client.view.html'
+		}).
+		state('addUser', {
+			url: '/thermostats/:thermostatId/adduser',
+			templateUrl: 'modules/thermostats/views/addUser-thermostat.client.view.html'
 		});
 	}
 ]);
