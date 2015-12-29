@@ -21,7 +21,7 @@ var pngResponse = function(rinfo) {
 
 var ithResponse = function(msg, rinfo) {
 	var thermostat = new Thermostat({
-		'name': msg.toString(),
+		'name': msg.toString().substring(0,msg.toString().length - 1),
 		'ipAddress': rinfo.address,
 		'udpPort': rinfo.port
 	});

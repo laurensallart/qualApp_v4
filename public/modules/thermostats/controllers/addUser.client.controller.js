@@ -11,35 +11,43 @@ angular.module('thermostats')
 			$scope.thermostat = Thermostats.get({ 
 				thermostatId: $stateParams.thermostatId
 			});
-			
-
 		};
-
-
-			
-
 
 		$scope.submitUser = function() {
 			$scope.newUser = UsersThermostat.get({
 				username: this.newUsername
 			}, function() {
-				console.log($scope.newUser);
+				console.log($scope.newUser._id);
 				if ($scope.newUser._id) {
-					$scope.thermostat.users.push($scope.newUser._id);
-					$scope.thermostat.$update(function() {
-						$location.path('thermostats');
-					}, function(errorResponse) {
-						$scope.error = errorResponse.data.message;
-					});
+					var uniqueUser = true;
+					$scope.thermostat.users.forEach( function(user) {
+						console.log(user._id);
+
+						if (user._id === $scope.newUser._id) {
+							$scope.error = 'User already added to thermostat';
+							uniqueUser = false;
+						}
+					});	
+					if (uniqueUser) {
+						$scope.thermostat.users.push($scope.newUser);
+						$scope.thermostat.$update(function() {
+						}, function(errorResponse) {
+							$scope.error = errorResponse.data.message;
+						});
+					}
 				} else {
 					$scope.error = 'username doesn\'t exist';
 					console.log($scope.error);
 				}
 			});
-			
-			
 		};
 
-		
+		$scope.removeUser = function(userIndex) {
+			this.thermostat.users.splice(userIndex, 1);
+			this.thermostat.$update(function() {
+			}, function(errorResponse) {
+				$scope.error = errorResponse.data.message;
+			});
+		};
 	}
 ]);
