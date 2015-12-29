@@ -397,7 +397,7 @@ thermostat.$save(function(response) {
 		$scope.remove = function(thermostat) {
 			if ( thermostat ) { 
 				thermostat.$remove();
-				
+
 				for (var i in $scope.thermostats) {
 					if ($scope.thermostats [i] === thermostat) {
 						$scope.thermostats.splice(i, 1);
@@ -436,6 +436,7 @@ thermostat.$save(function(response) {
 				thermostatId: this.objectId
 			}, function() {
 				thermostat.user = $scope.authentication.user._id;
+				thermostat.users.push($scope.authentication.user._id);
 				thermostat.$update(function() {
 					$location.path('thermostats');
 				}, function(errorResponse) {
@@ -459,6 +460,18 @@ thermostat.$save(function(response) {
 				thermostatId: $stateParams.thermostatId
 			});
 		};
+
+		$scope.addUser = function() {
+			$scope.thermostat.users.push('56268771955d78959a938a6b');
+			console.log($scope);
+			var thermostat = $scope.thermostat;
+			thermostat.$update(function() {
+				
+			}, function(errorResponse) {
+				$scope.error = errorResponse.data.message;
+			});
+		};
+
 		// Find existing Thermostat
 		$scope.addSchedule = function(thermostat) {
 			var newSchedule = {
