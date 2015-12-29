@@ -102,7 +102,7 @@ module.exports.delete = function(req, res) {
  * List of Thermostats
  */
 module.exports.list = function(req, res) { 
-	Thermostat.find({users: req.user._id}).sort('-created').populate('user', 'displayName').exec(function(err, thermostats) {
+	Thermostat.find({users: req.user._id}).sort('-created').populate('user', 'displayName').populate('users', 'displayName username email').exec(function(err, thermostats) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
@@ -127,7 +127,7 @@ module.exports.list = function(req, res) {
  * Thermostat middleware
  */
 module.exports.thermostatByID = function(req, res, next, id) { 
-	Thermostat.findById(id).populate('user', 'displayName').exec(function(err, thermostat) {
+	Thermostat.findById(id).populate('user', 'displayName').populate('users', 'displayName username email').exec(function(err, thermostat) {
 		if (err) return next(err);
 		if (! thermostat) return next(new Error('Failed to load Thermostat ' + id));
 		req.thermostat = thermostat ;
@@ -147,7 +147,13 @@ module.exports.hasAuthorization = function(req, res, next) {
 	// } 
 	// next();
 	if (req.thermostat.users.length !== 0) {
-		if (req.thermostat.users.indexOf(req.user.id) === -1){
+		var authorized = false;
+		req.thermostat.users.forEach( function(user) {
+			if (user.id === req.user.id) {
+				authorized = true;
+			}
+		});
+		if (!authorized){
 			return res.status(403).send('User is not authorized');
 		}
 	}
